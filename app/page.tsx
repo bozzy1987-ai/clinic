@@ -38,7 +38,7 @@ export default function Home() {
             <div className="hero-foot"><span>01 / INDYWIDUALNE PODEJŚCIE</span><span>EC CLINIC · ZAWIERCIE</span></div>
           </div>
           <div className="hero-image">
-            <Image src="/clinic-hero.png" alt="Ilustracyjny portret kobiety na neutralnym tle" fill sizes="(max-width: 800px) 100vw, 50vw" priority />
+            <Image src="/clinic-hero.png" alt="Ilustracyjny portret kobiety na neutralnym tle" fill sizes="(max-width: 800px) 100vw, 50vw" priority unoptimized />
             <span className="image-label">ZDJĘCIE ILUSTRACYJNE</span>
           </div>
         </section>
