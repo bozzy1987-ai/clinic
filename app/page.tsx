@@ -8,8 +8,17 @@ const maps = 'https://www.google.com/maps/search/?api=1&query=EC+CLINIC+Edyta+Ci
 const services = [
   { number: '01', name: 'Kosmetologia twarzy', detail: 'Pielęgnacja dobrana do potrzeb skóry, zabiegi autorskie i konsultacje.', anchor: 'twarz' },
   { number: '02', name: 'Podologia', detail: 'Konsultacja i zabiegi pielęgnacyjne stóp oraz paznokci.', anchor: 'podologia' },
-  { number: '03', name: 'Depilacja laserowa', detail: 'Zabiegi dla różnych partii ciała. Dobór zakresu podczas konsultacji.', anchor: 'laser' },
+  { number: '03', name: 'Depilacja laserowa', detail: 'Zabiegi dla różnych partii ciała. Dobór zakresu podczas konsultacji.', anchor: 'depilacja' },
   { number: '04', name: 'Zabiegi na ciało', detail: 'Oferta zabiegów pielęgnacyjnych i modelujących sylwetkę.', anchor: 'cialo' },
+];
+
+const treatments = [
+  { id: 'twarz', name: 'Kosmetologia twarzy', image: '/services/facial.jpg', alt: 'Kosmetolożka nakłada preparat na twarz klientki', text: 'Zabiegi autorskie, oczyszczanie i pielęgnacja dopasowana do kondycji skóry. Jeśli nie wiesz, od czego zacząć, wybierz konsultację kosmetologiczną.' },
+  { id: 'podologia', name: 'Podologia', image: '/services/podology.jpg', alt: 'Specjalistka w rękawiczkach wykonuje zabieg pielęgnacyjny stopy', text: 'Pierwsza wizyta podologiczna, pielęgnacja stóp i paznokci oraz zabiegi związane z konkretnymi dolegliwościami. Zakres wizyty ustalany jest indywidualnie.' },
+  { id: 'depilacja', name: 'Depilacja laserowa', image: '/services/hair-removal.jpg', alt: 'Głowica urządzenia używana podczas zabiegu depilacji laserowej nogi', text: 'Zabiegi na wybrane partie twarzy i ciała. W Booksy znajdziesz dostępne obszary, pojedyncze wizyty i pakiety.' },
+  { id: 'cialo', name: 'Zabiegi na ciało', image: '/services/body.jpg', alt: 'Terapeutka wykonuje masaż pleców', text: 'Peelingi, zabiegi pielęgnacyjne i modelujące oraz masaże. Wybierz rodzaj wizyty zgodnie z tym, czego potrzebujesz teraz.' },
+  { id: 'trychologia', name: 'Trychologia', image: '/services/trichology.jpg', alt: 'Masaż skóry głowy podczas zabiegu pielęgnacyjnego', text: 'Konsultacja, oczyszczanie skóry głowy, peeling i masaż. W ofercie jest także autorski zabieg trychologiczny EC CLINIC.' },
+  { id: 'laseroterapia', name: 'Laseroterapia', image: '/services/laser-therapy.jpg', alt: 'Zabieg na skórę twarzy z użyciem urządzenia laserowego', text: 'W tej kategorii dostępne są m.in. fotoodmładzanie oraz zabiegi dotyczące naczynek i rumienia. Szczegóły omówisz podczas konsultacji.' },
 ];
 
 export default function Home() {
@@ -51,14 +60,21 @@ export default function Home() {
         <section className="services section-pad" id="oferta" aria-labelledby="services-title">
           <div className="section-heading"><div><span className="eyebrow">01 / OFERTA</span><h2 id="services-title">Twoje potrzeby.<br /><em>Nasza uwaga.</em></h2></div><p>Od pierwszej konsultacji po regularną pielęgnację. Sprawdź główne obszary oferty i wybierz termin w Booksy.</p></div>
           <div className="service-grid">
-            {services.map((service) => <a key={service.number} className="service-card" href={booksy} target="_blank" rel="noopener noreferrer" aria-label={`${service.name} — zobacz terminy w Booksy`}><span className="service-number">{service.number} / 04</span><div className="service-bottom"><h3>{service.name}</h3><p>{service.detail}</p><span className="service-link">Zobacz terminy <ArrowUpRight size={18} aria-hidden="true" /></span></div></a>)}
+            {services.map((service) => <a key={service.number} className="service-card" href={`#${service.anchor}`} aria-label={`${service.name} — poznaj zabiegi`}><span className="service-number">{service.number} / 04</span><div className="service-bottom"><h3>{service.name}</h3><p>{service.detail}</p><span className="service-link">Poznaj zabiegi <ArrowDown size={18} aria-hidden="true" /></span></div></a>)}
           </div>
-          <p className="service-note">Pełna lista usług, aktualne ceny i wolne terminy są dostępne w Booksy.</p>
+          <div className="treatments-heading"><div><span className="eyebrow">ZOBACZ Z BLISKA</span><h3>Wybierz swoją <em>ścieżkę pielęgnacji.</em></h3></div><p>Sześć obszarów oferty, od pielęgnacji twarzy po zabiegi skóry głowy. Każdy prowadzi do aktualnej listy terminów.</p></div>
+          <div className="treatment-grid">
+            {treatments.map((treatment, index) => <article className="treatment-card" id={treatment.id} key={treatment.id}>
+              <div className="treatment-photo"><Image src={treatment.image} alt={treatment.alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" unoptimized /></div>
+              <div className="treatment-copy"><span className="treatment-index">{String(index + 1).padStart(2, '0')} / 06</span><h4>{treatment.name}</h4><p>{treatment.text}</p><a href={booksy} target="_blank" rel="noopener noreferrer">Sprawdź usługi w Booksy <ArrowUpRight size={17} aria-hidden="true" /></a></div>
+            </article>)}
+          </div>
+          <p className="service-note">Zdjęcia zabiegów są ilustracyjne i nie przedstawiają EC CLINIC. Pełna oferta, ceny i wolne terminy są dostępne w Booksy.</p>
         </section>
 
         <section className="about" id="o-nas" aria-labelledby="about-title">
           <div className="about-side"><span>EC</span><span>EST. ZAWIERCIE</span></div>
-          <div className="about-main"><span className="eyebrow">02 / O EC CLINIC</span><h2 id="about-title">Za każdym zabiegiem stoi <em>rozmowa.</em></h2><p>EC CLINIC Edyty Cichor łączy kosmetologię, podologię, depilację laserową i zabiegi na ciało. To przestrzeń dla osób, które chcą świadomie wybrać pielęgnację i wiedzieć, czego mogą oczekiwać od wizyty.</p><a href={booksy} target="_blank" rel="noopener noreferrer" className="about-link">Sprawdź usługi i dostępność <ArrowRight size={19} aria-hidden="true" /></a></div>
+          <div className="about-main"><span className="eyebrow">02 / O EC CLINIC</span><h2 id="about-title">Za każdym zabiegiem stoi <em>rozmowa.</em></h2><p>W ofercie EC CLINIC Edyty Cichor znajdziesz kosmetologię, podologię, trychologię, zabiegi laserowe i pielęgnację ciała. To przestrzeń dla osób, które chcą świadomie wybrać pielęgnację i wiedzieć, czego mogą oczekiwać od wizyty.</p><a href={booksy} target="_blank" rel="noopener noreferrer" className="about-link">Sprawdź usługi i dostępność <ArrowRight size={19} aria-hidden="true" /></a></div>
         </section>
 
         <section className="visit section-pad" id="kontakt" aria-labelledby="visit-title">
