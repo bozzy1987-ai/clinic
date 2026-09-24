@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ArrowDown, ArrowRight, ArrowUpRight, MapPin, Phone, Sparkles } from 'lucide-react';
+import PodologyPhoto from './PodologyPhoto';
 
 const booksy = 'https://booksy.com/pl-pl/99158_ec-clinic-edyta-cichor_salon-kosmetyczny_12514_zawiercie';
 const phone = 'tel:+48605650311';
@@ -25,7 +26,7 @@ type Treatment = {
 
 const treatments: Treatment[] = [
   { id: 'twarz', name: 'Kosmetologia twarzy', image: '/booksy/facial.jpg', alt: 'Zabieg na twarz pokazany w portfolio EC CLINIC', text: 'Zdjęcie z gabinetu pokazuje pielęgnację twarzy. Rodzaj zabiegu dobierany jest do kondycji skóry podczas konsultacji.', examples: ['Frizmi — zabieg na twarz', 'Oczyszczanie wodorowe', 'Autorski zabieg EC CLINIC'], source: 'booksy' },
-  { id: 'podologia', name: 'Podologia', image: '/booksy/podology.jpg', alt: 'Zdjęcia stopy przed i po zabiegu z portfolio EC CLINIC', text: 'Przykład przed i po z portfolio podologicznego EC CLINIC. Zakres wizyty zależy od oceny skóry i paznokci stóp.', examples: ['Pierwsza wizyta podologiczna', 'Kompleksowy zabieg podologiczny', 'Zabieg pielęgnacyjny na stopy'], source: 'booksy', showWholePhoto: true },
+  { id: 'podologia', name: 'Podologia', image: '/services/podology.jpg', alt: 'Ilustracyjne zdjęcie zabiegu pielęgnacyjnego stopy', text: 'Pielęgnacja skóry i paznokci stóp oraz zabiegi związane z konkretnymi dolegliwościami. Kliknij zdjęcie, aby zobaczyć przykład przed i po z portfolio EC CLINIC.', examples: ['Pierwsza wizyta podologiczna', 'Kompleksowy zabieg podologiczny', 'Zabieg pielęgnacyjny na stopy'], source: 'illustrative' },
   { id: 'depilacja', name: 'Depilacja laserowa', image: '/booksy/laser-hair.jpg', alt: 'Zestawienie przed i po depilacji laserowej opublikowane przez EC CLINIC', text: 'Klinika pokazuje w Booksy przykład zmiany po depilacji laserowej. Zabiegi obejmują różne partie twarzy i ciała.', examples: ['Depilacja laserowa pach', 'Depilacja laserowa łydek i nóg', 'Depilacja laserowa twarzy'], source: 'booksy', showWholePhoto: true },
   { id: 'cialo', name: 'Zabiegi na ciało i EMS', image: '/booksy/ems.jpg', alt: 'Osoba podczas zabiegu EMS w gabinecie EC CLINIC', text: 'Na zdjęciu widać zabieg EMS w gabinecie. Oferta na ciało obejmuje także zabiegi pielęgnacyjne i modelujące.', examples: ['EMS — fitness na leżąco', 'Peeling ciała', 'Liposukcja kawitacyjna i body wrapping'], source: 'booksy' },
   { id: 'trychologia', name: 'Trychologia', image: '/services/trichology.jpg', alt: 'Ilustracyjne zdjęcie masażu skóry głowy', text: 'Konsultacja i zabiegi skóry głowy. Zakres pielęgnacji jest dobierany indywidualnie.', examples: ['Konsultacja trychologiczna', 'Peeling skóry głowy', 'Masaż skóry głowy'], source: 'illustrative' },
@@ -76,11 +77,11 @@ export default function Home() {
           <div className="treatments-heading"><div><span className="eyebrow">ZOBACZ Z BLISKA</span><h3>Wybierz swoją <em>ścieżkę pielęgnacji.</em></h3></div><p>Zdjęcia z portfolio EC CLINIC i przykłady zabiegów znajdziesz bezpośrednio przy każdym obszarze oferty.</p></div>
           <div className="treatment-grid">
             {treatments.map((treatment, index) => <article className="treatment-card" id={treatment.id} key={treatment.id}>
-              <div className={`treatment-photo${treatment.showWholePhoto ? ' treatment-photo--whole' : ''}`}><Image src={treatment.image} alt={treatment.alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" unoptimized style={treatment.showWholePhoto ? { objectFit: 'contain' } : undefined} /></div>
+              {treatment.id === 'podologia' ? <PodologyPhoto /> : <div className={`treatment-photo${treatment.showWholePhoto ? ' treatment-photo--whole' : ''}`}><Image src={treatment.image} alt={treatment.alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" unoptimized style={treatment.showWholePhoto ? { objectFit: 'contain' } : undefined} /></div>}
               <div className="treatment-copy"><div className="treatment-meta"><span className="treatment-index">{String(index + 1).padStart(2, '0')} / 06</span><span>{treatment.source === 'booksy' ? 'ZDJĘCIE EC CLINIC · BOOKSY' : 'ZDJĘCIE ILUSTRACYJNE'}</span></div><h4>{treatment.name}</h4><p>{treatment.text}</p><div className="treatment-examples"><strong>W ofercie m.in.</strong><ul>{treatment.examples.map((example) => <li key={example}>{example}</li>)}</ul></div><a href={booksy} target="_blank" rel="noopener noreferrer">Sprawdź usługi w Booksy <ArrowUpRight size={17} aria-hidden="true" /></a></div>
             </article>)}
           </div>
-          <p className="service-note">Zdjęcia „przed i po” są przykładami z portfolio EC CLINIC; efekt zabiegu zależy od indywidualnych warunków. Zdjęcia trychologii i laseroterapii są ilustracyjne. Pełna oferta, ceny i terminy są dostępne w Booksy.</p>
+          <p className="service-note">Zdjęcia „przed i po” są przykładami z portfolio EC CLINIC; efekt zabiegu zależy od indywidualnych warunków. Zdjęcia podologii, trychologii i laseroterapii na kartach są ilustracyjne. Pełna oferta, ceny i terminy są dostępne w Booksy.</p>
         </section>
 
         <section className="about" id="o-nas" aria-labelledby="about-title">
