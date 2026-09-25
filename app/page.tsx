@@ -20,6 +20,7 @@ type Treatment = {
   alt: string;
   text: string;
   examples: string[];
+  examplesTitle?: string;
   photo?: { src: string; alt: string; title: string; note: string; buttonText: string };
 };
 
@@ -30,6 +31,11 @@ const treatments: Treatment[] = [
   { id: 'cialo', name: 'Zabiegi na ciało i EMS', image: '/services/body.jpg', alt: 'Ilustracyjne zdjęcie zabiegu pielęgnacyjnego ciała', text: 'Oferta na ciało obejmuje EMS oraz zabiegi pielęgnacyjne i modelujące. Kliknij zdjęcie, aby zobaczyć EMS w gabinecie EC CLINIC.', examples: ['EMS — fitness na leżąco', 'Peeling ciała', 'Liposukcja kawitacyjna i body wrapping'], photo: { src: '/booksy/ems.jpg', alt: 'Osoba podczas zabiegu EMS w gabinecie EC CLINIC', title: 'EMS w EC CLINIC', note: 'Zdjęcie zabiegu EMS z portfolio EC CLINIC opublikowanego w Booksy.', buttonText: 'Zobacz zdjęcie EC CLINIC' } },
   { id: 'trychologia', name: 'Trychologia', image: '/services/trichology.jpg', alt: 'Ilustracyjne zdjęcie masażu skóry głowy', text: 'Konsultacja i zabiegi skóry głowy. Zakres pielęgnacji jest dobierany indywidualnie.', examples: ['Konsultacja trychologiczna', 'Peeling skóry głowy', 'Masaż skóry głowy'] },
   { id: 'laseroterapia', name: 'Laseroterapia', image: '/services/laser-therapy.jpg', alt: 'Ilustracyjne zdjęcie zabiegu laserowego na twarzy', text: 'Zabiegi laserowe dotyczące wyglądu skóry twarzy i wybranych zmian. Szczegóły omówisz podczas konsultacji.', examples: ['Fotoodmładzanie', 'Zamykanie naczynek', 'Laserowe usuwanie rumienia'] },
+  { id: 'radiofrekwencja', name: 'Radiofrekwencja mikroigłowa', image: '/services/rf-microneedling.jpg', alt: 'Ilustracyjne zdjęcie urządzenia do zabiegów kosmetologicznych', text: 'Zabieg łączy mikronakłuwanie skóry z działaniem fali radiowej. W Booksy dostępne są warianty dla okolic oczu, twarzy i ciała.', examples: ['Okolice oczu', 'Twarz', 'Ciało'] },
+  { id: 'mezoterapia', name: 'Mezoterapia mikroigłowa', image: '/services/microneedling.jpg', alt: 'Ilustracyjne zdjęcie zabiegu mezoterapii mikroigłowej twarzy', text: 'Zabieg z mikronakłuciami, którego zakres jest dobierany do potrzeb skóry. Można umówić pielęgnację twarzy, szyi i dekoltu.', examples: ['Twarz', 'Twarz i szyja', 'Twarz, szyja i dekolt'] },
+  { id: 'kobido', name: 'Masaż Kobido', image: '/services/kobido.jpg', alt: 'Ilustracyjne zdjęcie manualnego masażu twarzy', text: 'Manualny masaż twarzy dostępny także w wariancie z maską lub tapingiem. Chwila na odpoczynek i pielęgnację bez aparatury.', examples: ['Kobido', 'Kobido z maską', 'Kobido z tapingiem'] },
+  { id: 'peeling-chemiczny', name: 'Peeling chemiczny', image: '/services/chemical-peel.jpg', alt: 'Ilustracyjne zdjęcie nakładania preparatu na twarz podczas zabiegu', text: 'Złuszczanie z użyciem preparatu dobranego do potrzeb skóry. W ofercie znajdują się zabiegi na twarz, szyję i dekolt.', examples: ['Twarz', 'Twarz i szyja', 'Twarz, szyja i dekolt'] },
+  { id: 'pedicure-spa', name: 'Pedicure SPA', image: '/services/pedicure-spa.jpg', alt: 'Ilustracyjne zdjęcie zabiegu pielęgnacyjnego stóp', text: 'Rytuał pielęgnacyjny stóp z kąpielą, opracowaniem skóry i paznokci, peelingiem oraz masażem. Usługa nie obejmuje malowania paznokci.', examples: ['Kąpiel stóp', 'Pielęgnacja skóry i paznokci', 'Peeling i masaż'], examplesTitle: 'W zabiegu' },
 ];
 
 export default function Home() {
@@ -77,10 +83,10 @@ export default function Home() {
           <div className="treatment-grid">
             {treatments.map((treatment, index) => <article className="treatment-card" id={treatment.id} key={treatment.id}>
               {treatment.photo ? <TreatmentPhoto id={treatment.id} name={treatment.name} preview={treatment.image} previewAlt={treatment.alt} photo={treatment.photo.src} photoAlt={treatment.photo.alt} photoTitle={treatment.photo.title} photoNote={treatment.photo.note} buttonText={treatment.photo.buttonText} /> : <div className="treatment-photo"><Image src={treatment.image} alt={treatment.alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" unoptimized /></div>}
-              <div className="treatment-copy"><div className="treatment-meta"><span className="treatment-index">{String(index + 1).padStart(2, '0')} / 06</span><span>ZDJĘCIE ILUSTRACYJNE</span></div><h4>{treatment.name}</h4><p>{treatment.text}</p><div className="treatment-examples"><strong>W ofercie m.in.</strong><ul>{treatment.examples.map((example) => <li key={example}>{example}</li>)}</ul></div><a href={booksy} target="_blank" rel="noopener noreferrer">Sprawdź usługi w Booksy <ArrowUpRight size={17} aria-hidden="true" /></a></div>
+              <div className="treatment-copy"><div className="treatment-meta"><span className="treatment-index">{String(index + 1).padStart(2, '0')} / {String(treatments.length).padStart(2, '0')}</span><span>ZDJĘCIE ILUSTRACYJNE</span></div><h4>{treatment.name}</h4><p>{treatment.text}</p><div className="treatment-examples"><strong>{treatment.examplesTitle ?? 'W ofercie m.in.'}</strong><ul>{treatment.examples.map((example) => <li key={example}>{example}</li>)}</ul></div><a href={booksy} target="_blank" rel="noopener noreferrer">Sprawdź usługi w Booksy <ArrowUpRight size={17} aria-hidden="true" /></a></div>
             </article>)}
           </div>
-          <p className="service-note">Zdjęcia na kartach są ilustracyjne. Po kliknięciu kart twarzy, podologii, depilacji i EMS zobaczysz fotografie EC CLINIC z Booksy. Dla trychologii i laseroterapii nie ma tu potwierdzonych zdjęć konkretnych zabiegów. Pełna oferta, ceny i terminy są dostępne w Booksy.</p>
+          <p className="service-note">Zdjęcia na kartach są ilustracyjne. Po kliknięciu kart twarzy, podologii, depilacji i EMS zobaczysz fotografie EC CLINIC z Booksy. Pozostałe karty nie mają potwierdzonych zdjęć konkretnych zabiegów z gabinetu. Pełna oferta, ceny i terminy są dostępne w Booksy.</p>
         </section>
 
         <section className="about" id="o-nas" aria-labelledby="about-title">
